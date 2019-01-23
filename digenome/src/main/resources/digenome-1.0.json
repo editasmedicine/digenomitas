@@ -1,0 +1,55 @@
+{
+  "req": "",
+  "analysisSheetLocation": {
+    "bucket": "",
+    "key": ""
+  },
+  "pipeline": {
+    "name": "Digenome"
+  },
+  "jira": {
+    "issue": "",
+    "server": "https://editas.atlassian.net"
+  },
+  "rawData": {
+    "bucket": "sequencing.data",
+    "path": ""
+  },
+  "resultsData": {
+    "bucket": "editas-analysis",
+    "path": "digenomitas/{smart_folder}"
+  },
+  "parquetData": {
+    "bucket": "editas-athena",
+    "cutsite_path": "digenomitas/results_parquet/{smart_folder}",
+    "summary_path": "digenomitas/results_summary_parquet/{smart_folder}"
+  },
+  "batchJob": {
+    "jobName": "",
+    "jobQueue": "sequencing-large-disk",
+    "dependsOn": [],
+    "jobDefinition": "digenome-seq:2",
+    "parameters": {},
+    "retryStrategy": {
+      "attempts": 1
+    },
+    "containerOverrides":{
+      "vcpus": 36,
+      "memory": 60000
+    }
+  },
+  "analysisParameters": {
+    "previous_analysis": "editas-non-existent-bucket/no-path",
+    "reference_genome_location": "/root/reference",
+    "process_samples": [],
+    "mapping_quality_cutoffs": [0, 30],
+    "max_offset": 2,
+    "min_depth": 10,
+    "max_depth": 300,
+    "max_low_mapq_fraction": 0.3,
+    "min_fwd_reads": 4,
+    "min_rev_reads": 4,
+    "min_total_reads": 8,
+    "min_cut_fraction": 0.2
+  }
+}

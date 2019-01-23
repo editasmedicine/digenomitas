@@ -1,0 +1,4 @@
+python=3.6.4
+bwa=0.7.17
+sambamba=0.6.6
+picard=2.17.0
