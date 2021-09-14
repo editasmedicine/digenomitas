@@ -451,6 +451,7 @@ class IdentifyCutSites
   @arg(flag='m', doc="Discard reads below the given mapping quality.") val minMapQ: Int = 30,
   @arg(          doc="The expected overhang at the cut site. Positive for 5' overhang, negative for 3'.") val overhang: Int = 0,
   @arg(flag='x', doc="Counts reads starting this many bases from expected start sites.") val maxOffset: Int = 2,
+  @arg(flag='d', doc="Don't check that reference genome and BAM file have the same set of sequences.") val dontCheckRef: Boolean = false,
   // Filtering arguments
   @arg(flag='N', doc="Minimum depth of coverage to output site.") val minDepth: Int = 10,
   @arg(flag='X', doc="Maximum depth of coverage to output site.") val maxDepth: Int = 300,
@@ -495,7 +496,7 @@ class IdentifyCutSites
       val name = source.toSamReader.getResourceDescription
       require(source.header.getSortOrder == SortOrder.coordinate, s"Input BAM is not coordinate sorted: $name")
       require(source.indexed, s"Input BAM is not indexed: $name")
-      require(source.dict.isSameDictionary(dict), s"Input BAMs doesn't match provided reference: $name.")
+      if (!dontCheckRef) require(source.dict.isSameDictionary(dict), s"Input BAMs doesn't match provided reference: $name.")
     }
 
     logger.info(f"Sampling reads to determine read length and insert size.")
